@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-// const Display = ({ counter }) => <div>{counter}</div>
+const Display = ({ value }) => <div>{value}</div>
 
 
 const Button = ({ onClick, text }) => (
@@ -31,6 +31,13 @@ const App = () => {
   })
 
   const [allClicks, setAll] = useState([])
+
+  const [value, setValue] = useState(10)
+
+  const setToValue = newValue => {
+    console.log('value now', newValue)
+    setValue(newValue)
+  }
   
 
   const handleLeftClick = () => {
@@ -52,6 +59,10 @@ const App = () => {
       <Button onClick={handleRightClick} text='right' />
       {clicks.right}
       <History allClicks={allClicks} />
+      <Display value={value} />
+      <Button onClick={() => setToValue(1000)} text='thousand' />
+      <Button onClick={() => setToValue(0)} text='reset' />
+      <Button onClick={() => setToValue(value + 1)} text='increment' />
     </div>
   )
 }
