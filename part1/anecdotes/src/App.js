@@ -24,7 +24,7 @@ const App = () => {
   }
 
   const highIndex = vote.reduce((highestIndexSoFar, currentlyTestedValue, currentlyTestedIndex, array) => currentlyTestedValue > array[highestIndexSoFar] ? currentlyTestedIndex : highestIndexSoFar, 0)
-
+  
   return (
     <div>
       <h1>Anecdote of the day</h1>
