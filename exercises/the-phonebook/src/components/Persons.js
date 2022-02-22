@@ -2,11 +2,10 @@ import React from 'react'
 
 const Person = ({ name, number }) => <p>{name} {number}</p>
 
-const Persons = ({ persons, searchFor }) => {
-
+const Persons = ({ persons, filter }) => {
     return (
-        persons.filter(person => person.name.includes(searchFor)).map(person => {
-            return <Person key={person.id} name={person.name} number={person.number} />
+        persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())).map(p => {
+            return <Person key={p.id} name={p.name} number={p.number} />
         })
     )
 
