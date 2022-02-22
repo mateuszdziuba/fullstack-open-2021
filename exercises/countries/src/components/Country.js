@@ -7,18 +7,17 @@ const Weather = ({ city, code }) => {
    
     const [weatherNow, setWeatherNow] = useState([])
 
-    const apiKey = '9700b2c049dbe0a2e25cce9b613fa8f9'
+    const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${code}&appid=${apiKey}&units=metric`
     
 
     useEffect(() => {
         axios
             .get(url)
-            .then(response => {
-                const weatherData = response.data
-                setWeatherNow(weatherData)
-            })
+            .then(response => response.data)
+            .then(weatherData => () => setWeatherNow(weatherData))
     }, [url])
+
 
     return (
         <div>
@@ -28,6 +27,7 @@ const Weather = ({ city, code }) => {
             <p>wind {weatherNow.wind.speed} m/s</p>
         </div>
     )
+
 }
 
 const Country = ({ country }) => {
