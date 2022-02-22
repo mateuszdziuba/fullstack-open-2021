@@ -6,7 +6,11 @@ import FindCountry from './components/FindCountry'
 const App = () => {
 
   const [countries, setCountries] = useState([])
-  const [findCountry, setFindCountry] = useState('')
+  const [searchFor, setSearchFor] = useState('')
+  const [filteredCountries, setFilteredCountries] = useState([])
+  const [found, setFound] = useState(filteredCountries.length === 1)
+  
+
 
   useEffect(() => {
     axios
@@ -14,14 +18,20 @@ const App = () => {
       .then(response => {
         setCountries(response.data)
       })
-  })
+  }, [])
 
-
+  const setCountry = (e) => {
+    let currState = e.target.value
+    setSearchFor(currState)
+    let afterFilter = countries.filter(country => country.name.common.toLowerCase().includes(currState.toLowerCase()))
+    setFilteredCountries(afterFilter)
+    setFound(afterFilter.length === 1)
+  }
 
   return (
     <div>
-      <FindCountry findCountry={findCountry} onChange={e => setFindCountry(e.target.value)} />
-      <Countries countries={countries} filter={findCountry} />
+      <FindCountry searchFor={searchFor} onChange={setCountry} />
+      <Countries countries={filteredCountries} filter={searchFor} found={found} />
     </div>
   )
 }

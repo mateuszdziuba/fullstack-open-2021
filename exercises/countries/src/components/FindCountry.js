@@ -1,5 +1,5 @@
 import React from "react"
 
-const FindCountries = ({ findCountry, onChange }) => <div>find countries <input value={findCountry} onChange={onChange} /></div>
+const FindCountries = ({ searchFor, onChange }) => <div>find countries <input value={searchFor} onChange={onChange} /></div>
 
 export default FindCountries
