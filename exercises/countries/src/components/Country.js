@@ -10,11 +10,13 @@ const Weather = ({ city, code }) => {
     const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${code}&appid=${apiKey}&units=metric`
     
+    console.log(url)
 
     useEffect(() => {
         axios
             .get(url)
             .then(response => response.data)
+            .then(weatherData => console.log(weatherData))
             .then(weatherData => () => setWeatherNow(weatherData))
     }, [url])
 
