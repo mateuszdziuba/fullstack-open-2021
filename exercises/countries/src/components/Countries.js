@@ -33,7 +33,8 @@ const Countries = ({ countries, filter}) => {
     return (
         <div>
                 {
-                    countries.map(country => <p key={country.cca2}>{country.name.common}<button onClick={() => handleClick(country)}>show</button></p>)
+                    
+                    countries.length > 1 ? countries.map(country => <p key={country.cca2}>{country.name.common}<button onClick={() => handleClick(country)}>show</button></p>) : <></>
                 } 
                     <Country country={chosenCountry}/>
                     
