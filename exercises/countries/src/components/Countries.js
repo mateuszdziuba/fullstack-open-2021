@@ -1,39 +1,31 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Country from "./Country"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 
 
-const Countries = ({ countries, filter, found }) => {
-
+const Countries = ({ countries, filter}) => {
     const [chosenCountry, setChosenCountry] = useState('')
-    const [countryFound, setCountryFound] = useState(found)
-
-    useEffect(() => {
-        if(found) {
-            let cf = countries[0]
-            setChosenCountry(cf) 
-            setCountryFound(true)
-        }
-    }, [found, countries, chosenCountry])
 
     const handleClick = (name) => {
         setChosenCountry(name)
-        setCountryFound(true)
     }
+    useEffect(() => {
+        if (countries.length === 1) setChosenCountry(countries[0])
+    }, [countries])
 
-    if (filter === '') {
+    if (filter === '' && chosenCountry === '') {
         return (
-            <div></div>
+            <></>
         )
     }
-    if (countryFound) {
+    if (chosenCountry === '') {
         return (
             <div>
                 {
                     countries.map(country => <p key={country.cca2}>{country.name.common}<button onClick={() => handleClick(country)}>show</button></p>)
                 } 
-                    <Country country={chosenCountry}/>
+                    
                         
             </div>
         )
@@ -43,6 +35,7 @@ const Countries = ({ countries, filter, found }) => {
                 {
                     countries.map(country => <p key={country.cca2}>{country.name.common}<button onClick={() => handleClick(country)}>show</button></p>)
                 } 
+                    <Country country={chosenCountry}/>
                     
             </div>
     )
