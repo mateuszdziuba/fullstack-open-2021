@@ -1,14 +1,3 @@
 {
-  "phonebook": [
-    {
-      "name": "mama",
-      "number": "23423",
-      "id": 3
-    },
-    {
-      "name": "Patricia",
-      "number": "234234",
-      "id": 4
-    }
-  ]
+  "phonebook": []
 }

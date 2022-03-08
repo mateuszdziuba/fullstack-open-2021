@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import phonebook from './services/phonebook'
+import Notification from './components/Notification'
 import phonebookService from './services/phonebook'
 
 const App = () => {
@@ -10,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchFor, setSearchFor] = useState('')
+  const [errorMessage, setErrorMessage] = useState({ message: null, error: false })
 
   useEffect(() => {
     phonebookService
@@ -27,21 +28,31 @@ const App = () => {
           .update(person.id, changedPerson)
           .then(returnedPerson => {
             setPersons(persons.map(p => p.name !== newName ? p : returnedPerson))
-            setNewName('')
-            setNewNumber('')
+            setErrorMessage({ ...errorMessage, message: `Changed ${returnedPerson.name}`, error: false })
           })
+          .catch(error => {
+            setErrorMessage(
+              {...errorMessage, message: `Information of ${newName} has already been removed from server`, error: true} , 
+            )
+          })
+        }
+        
+      } else {
+        
+        const newPerson = { name: newName, number: newNumber }
+        phonebookService
+        .create(newPerson)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setErrorMessage({ ...errorMessage, message: `Added ${returnedPerson.name}`, error: false })
+        })
       }
-      return 
-    }
       
-    const newPerson = { name: newName, number: newNumber }
-    phonebookService
-      .create(newPerson)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
+      setNewName('')
+      setNewNumber('')
+      setTimeout(() => {
+        setErrorMessage({ message: null, error: false })
+      }, 5000)
   }
 
  const handleDelete = (id, name) => {
@@ -56,7 +67,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      <Notification errorMessage={errorMessage} />
       <Filter value={searchFor} onChange={(e) => setSearchFor(e.target.value)} />
 
       <h3>add a new</h3>
