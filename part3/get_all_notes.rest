@@ -8,3 +8,5 @@ Content-Type: application/json
     "content": "Postman is a good tool for testing a REST-api",
     "important": true
 }
+###
+GET http://localhost:3001/api/notes/623623cdeaccef0ad2704660
