@@ -6,12 +6,12 @@ console.log('connecting to', url)
 
 
 mongoose.connect(url)
-  .then(result => {
+  .then(() => {
     console.log('Connected to MongoDB')
   })
   .catch((error) => {
     console.error('error connecting to MongoDB:', error.message)
-    
+
   })
 
 const noteSchema = new mongoose.Schema({
