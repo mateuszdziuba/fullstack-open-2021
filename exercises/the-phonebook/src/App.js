@@ -15,7 +15,7 @@ const App = () => {
   useEffect(() => {
     phonebookService
       .getAll()
-      .then(initialPhonebook => setPersons(initialPhonebook)) 
+      .then(initialPhonebook => setPersons(initialPhonebook))
   }, [])
 
   const addNewPerson = (e) => {
@@ -32,36 +32,39 @@ const App = () => {
           })
           .catch(error => {
             setErrorMessage(
-              {...errorMessage, message: `Information of ${newName} has already been removed from server`, error: true} , 
+              { ...errorMessage, message: `Information of ${newName} has already been removed from server`, error: true } ,
             )
           })
-        }
-        
-      } else {
-        
-        const newPerson = { name: newName, number: newNumber }
-        phonebookService
+      }
+
+    } else {
+
+      const newPerson = { name: newName, number: newNumber }
+      phonebookService
         .create(newPerson)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
           setErrorMessage({ ...errorMessage, message: `Added ${returnedPerson.name}`, error: false })
         })
-      }
-      
-      setNewName('')
-      setNewNumber('')
-      setTimeout(() => {
-        setErrorMessage({ message: null, error: false })
-      }, 5000)
+        .catch(error => {
+          setErrorMessage(error.response.data)
+        })
+    }
+
+    setNewName('')
+    setNewNumber('')
+    setTimeout(() => {
+      setErrorMessage({ message: null, error: false })
+    }, 5000)
   }
 
- const handleDelete = (id, name) => {
-   if (window.confirm(`Delete ${name}?`)) {
-     phonebookService
-      .remove(id)
+  const handleDelete = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      phonebookService
+        .remove(id)
       setPersons(persons.filter(person => person.id !== id))
-   }
- }
+    }
+  }
 
 
   return (
