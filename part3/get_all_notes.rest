@@ -9,4 +9,10 @@ Content-Type: application/json
     "important": true
 }
 ###
-GET http://localhost:3001/api/notes/623623cdeaccef0ad2704660
+PUT http://localhost:3001/api/notes/623623cdeaccef0ad2704660
+Content-Type: application/json
+
+{
+    "content": "REST Client is a good tool for testing a REST-api",
+    "important": true
+}
