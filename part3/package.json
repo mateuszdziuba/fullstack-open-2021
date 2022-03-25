@@ -2,6 +2,7 @@
   "name": "part3",
   "version": "1.0.0",
   "main": "index.js",
+  "url": "https://desolate-crag-34169.herokuapp.com/",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
