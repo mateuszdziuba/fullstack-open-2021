@@ -11,20 +11,12 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.vfva7.mongodb.net/note
 
 mongoose.connect(url)
 
-const noteSchema = new mongoose.Schema({
-  content: {
-    type: String,
-    minLength: 5,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true
-  },
-  important: Boolean
-})
 
-const Note = mongoose.model('Note', noteSchema)
+const Note = mongoose.model('Note', {
+  content: String,
+  date: Date,
+  important: Boolean,
+})
 
 //   const note = new Note({
 //     content: 'HTML is Easy',
