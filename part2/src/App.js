@@ -26,15 +26,15 @@ const App = () => {
 
   useEffect(() => {
     noteService
-      .getAll()  
-      .then(initialNotes =>{
+      .getAll()
+      .then(initialNotes => {
         setNotes(initialNotes)
       })
   }, [])
 
   const toggleImportanceOf = id => {
     const note = notes.find(n => n.id === id)
-    const changedNote = { ... note, important: !note.important }
+    const changedNote = { ...note, important: !note.important }
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
@@ -56,7 +56,7 @@ const App = () => {
     const noteObject = {
       content: newNote,
       date: new Date().toISOString(),
-      important: Math.random() < 0.5,
+      // important: Math.random() < 0.5,
     }
 
     noteService
@@ -65,8 +65,11 @@ const App = () => {
         setNotes(notes.concat(returnedNote))
         setNewNote('')
       })
-      
-    }
+      .catch(error => {
+        setErrorMessage(error.response.data.error)
+      })
+
+  }
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
