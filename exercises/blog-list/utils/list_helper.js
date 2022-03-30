@@ -14,7 +14,7 @@ const favoriteBlog = (blogs) => {
 
 const mostBlogs = (blogs) => {
   const obj = blogs.reduce((val, cur) => {
-    val[cur.author] = val[cur.author] ? val[cur.author] + 1 : 1
+    val[cur.author] = (val[cur.author] || 0) + 1
     return val
   }, {})
   const result = Object.entries(obj).reduce((prev, current) => (prev[1] > current[1]) ? prev : current)
