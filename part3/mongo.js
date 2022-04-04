@@ -18,17 +18,6 @@ const Note = mongoose.model('Note', {
   important: Boolean,
 })
 
-//   const note = new Note({
-//     content: 'HTML is Easy',
-//     date: new Date(),
-//     important: true,
-//   })
-
-//   note.save().then(result => {
-//     console.log('note saved!')
-//     mongoose.connection.close()
-//   })
-
 Note.find({ important: true }).then(result => {
   result.forEach(note => {
     console.log(note)
