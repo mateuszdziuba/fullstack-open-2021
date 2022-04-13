@@ -7,3 +7,15 @@ Content-Type: application/json
   "author": "Mati",
   "likes": 234
 }
+###
+PUT http://localhost:3001/api/blogs/6256958d263ab48d2b68d470
+Content-Type: application/json
+
+{ 
+  "author": "Waciej",
+  "likes": 777,
+  "title": "Czary i magia",
+  "url": "czaryimag.ia"
+}
+
+DELETE http://localhost:3001/api/blogs/6242d5d7e34e2134d37d8f6a
