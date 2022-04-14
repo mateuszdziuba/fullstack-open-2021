@@ -1,12 +1,14 @@
 GET http://localhost:3001/api/notes
-
+###
+GET http://localhost:3001/api/users
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "Po",
-    "important": true
+    "content": "Testing user creation",
+    "important": true,
+    "userId": "625813c5d387cb9e1c2e030e"
 }
 ###
 PUT http://localhost:3001/api/notes/623623cdeaccef0ad2704660
@@ -15,4 +17,13 @@ Content-Type: application/json
 {
     "content": "REST Client is a good tool for testing a REST-api",
     "important": true
+}
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
 }
