@@ -1,14 +1,17 @@
 GET http://localhost:3001/api/blogs
 ###
-POST http://localhost:3001/api/blogs
+DELETE http://localhost:3001/api/blogs/62599278d8ab192eff18440e
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTkzNzQ1MDE0YzM0NzAyNjdhNDAwZSIsImlhdCI6MTY1MDAzNTQzOX0._o24avQos-51_SjX93UK5Pj853JMU6FEr1zXj3uJ1TE
+###
+PUT http://localhost:3001/api/blogs/6256958d263ab48d2b68d470
 Content-Type: application/json
 
 { 
   "author": "Mati",
-  "likes": 234
+  "likes": 234,
 }
 ###
-PUT http://localhost:3001/api/blogs/6256958d263ab48d2b68d470
+POST http://localhost:3001/api/blogs/
 Content-Type: application/json
 
 { 
@@ -17,5 +20,43 @@ Content-Type: application/json
   "title": "Czary i magia",
   "url": "czaryimag.ia"
 }
+
 ###
-DELETE http://localhost:3001/api/blogs/6242d5d7e34e2134d37d8f6a
+GET http://localhost:3001/api/users
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "username": "root",
+  "name": "Superuser",
+  "password": "toor"
+}
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "username": "posiboi",
+  "name": "PBoy",
+  "password": "tos"
+}
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "toor"
+}
+###
+POST http://localhost:3001/api/blogs/
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTkzNzQ1MDE0YzM0NzAyNjdhNDAwZSIsImlhdCI6MTY1MDAzNTQzOX0._o24avQos-51_SjX93UK5Pj853JMU6FEr1zXj3uJ1TE
+
+{ 
+  "author": "Maciej",
+  "likes": 6,
+  "title": "Szósty gracz",
+  "url": "szostygracz.pl"
+}

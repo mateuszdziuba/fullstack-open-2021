@@ -4,7 +4,7 @@ GET http://localhost:3001/api/users
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTgxM2M1ZDM4N2NiOWUxYzJlMDMwZSIsImlhdCI6MTY0OTk0NTE5MH0.1D8lRaEGUA5MIGlW-N-UEXq7QFE0tWZ2GXV3L4o7tBQ
 
 {
     "content": "Testing user creation",
