@@ -1,12 +1,15 @@
 GET http://localhost:3001/api/notes
-
+###
+GET http://localhost:3001/api/users
 ###
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTgxM2M1ZDM4N2NiOWUxYzJlMDMwZSIsImlhdCI6MTY0OTk0NTE5MH0.1D8lRaEGUA5MIGlW-N-UEXq7QFE0tWZ2GXV3L4o7tBQ
 
 {
-    "content": "Postman is a good tool for testing a REST-api",
-    "important": true
+    "content": "Testing user creation",
+    "important": true,
+    "userId": "625813c5d387cb9e1c2e030e"
 }
 ###
 PUT http://localhost:3001/api/notes/623623cdeaccef0ad2704660
@@ -15,4 +18,21 @@ Content-Type: application/json
 {
     "content": "REST Client is a good tool for testing a REST-api",
     "important": true
+}
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+    "username": "root",
+    "name": "Superuser",
+    "password": "salainen"
+}
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "username": "root",
+    "password": "salainen"
 }

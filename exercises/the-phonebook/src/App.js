@@ -32,7 +32,7 @@ const App = () => {
           })
           .catch(error => {
             setErrorMessage(
-              { ...errorMessage, message: `Information of ${newName} has already been removed from server`, error: true } ,
+              { ...errorMessage, message: error.response.data.error, error: true } ,
             )
           })
       }
@@ -47,7 +47,8 @@ const App = () => {
           setErrorMessage({ ...errorMessage, message: `Added ${returnedPerson.name}`, error: false })
         })
         .catch(error => {
-          setErrorMessage(error.response.data)
+          console.error(error)
+          setErrorMessage({ ...errorMessage, message: error.response.data.error, error: true })
         })
     }
 

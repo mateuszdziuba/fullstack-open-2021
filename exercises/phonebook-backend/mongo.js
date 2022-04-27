@@ -11,13 +11,10 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.vfva7.mongodb.net/phon
 
 mongoose.connect(url)
 
-
-const personSchema = new mongoose.Schema({
+const Person = mongoose.model('Person', {
   name: String,
   number: String
 })
-
-const Person = mongoose.model('Person', personSchema)
 
 
 if (process.argv.length === 5) {
