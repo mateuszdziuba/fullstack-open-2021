@@ -4,6 +4,7 @@ import blogService from './services/blogs'
 import login from './services/login'
 import loginService from './services/login'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
 
 const emptyBlog = {
   title: '',
@@ -18,6 +19,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [newBlog, setNewBlog] = useState(emptyBlog)
   const [errorMessage, setErrorMessage] = useState({ message: null, error: false })
+  const [loginVisible, setLoginVisible] = useState(false)
 
   const handleLogin = async event => {
     event.preventDefault()
@@ -76,32 +78,28 @@ const App = () => {
     }
   }, [])
 
+  const loginForm = () => {
+    const hideWhenVisible = { display: loginVisible ? 'none' : '' }
+    const showWhenVisible = { display: loginVisible ? '' : 'none' }
+
+    return (
+      <div>
+        <div style={hideWhenVisible}>
+          <button onClick={() => setLoginVisible(true)}>log in</button>
+        </div>
+        <div style={showWhenVisible}>
+          <LoginForm
+          />
+        </div>
+      </div>
+    )
+  }
+
 
   if (user === null) {
     return (<>
       <h2>log in to application</h2>
       <Notification errorMessage={errorMessage} />
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
     </>)
   }
 
@@ -126,7 +124,7 @@ const App = () => {
         </div>
         <button type="submit">create</button>
       </form>
-      <br/>
+      <br />
       {
         blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
