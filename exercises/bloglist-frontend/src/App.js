@@ -34,7 +34,6 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log(exception)
       setErrorMessage({ ...errorMessage, message: exception.response.data.error, error: true })
     }
   }
@@ -48,12 +47,15 @@ const App = () => {
   }
 
   const handleCreate = async event => {
-    event.preventDefault()
-    console.log(newBlog)
-    const blog = await blogService.create(newBlog)
-    setBlogs(blogs.concat(blog))
-    setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title} by ${newBlog.author} added`, error: false })
-    setNewBlog(emptyBlog)
+    try {
+      event.preventDefault()
+      const blog = await blogService.create(newBlog)
+      setBlogs(blogs.concat(blog))
+      setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title === '' ? newBlog.url : newBlog.title} by ${newBlog.author} added`, error: false })
+      setNewBlog(emptyBlog)
+    } catch (e) {
+      setErrorMessage({ ...errorMessage, message: e.response.data.error, error: true })
+    }
   }
 
   const handleLogout = () => {
@@ -126,7 +128,7 @@ const App = () => {
         </div>
         <button type="submit">create</button>
       </form>
-      <br/>
+      <br />
       {
         blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
