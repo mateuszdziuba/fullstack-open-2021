@@ -46,7 +46,8 @@ const App = () => {
     const { name, value } = event.target
     setNewBlog({
       ...newBlog,
-      [name]: value
+      [name]: value,
+      user: user.id
     })
   }
 
@@ -55,6 +56,8 @@ const App = () => {
       event.preventDefault()
       blogFormRef.current.toggleVisibility()
       const blog = await blogService.create(newBlog)
+      console.log(blog.user)
+
       setBlogs(blogs.concat(blog))
       setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title} by ${newBlog.author} added`, error: false })
       setNewBlog(emptyBlog)
