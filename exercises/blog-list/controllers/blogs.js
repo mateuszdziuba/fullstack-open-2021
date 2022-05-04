@@ -23,7 +23,8 @@ blogsRouter.post('/', async (request, response) => {
   const user = await User.findById(request.user.id)
 
   if (!body.title && !body.url) {
-    return response.status(400).end()
+
+    return response.status(400).json({ error: 'blog must contain title or url' })
   }
 
   const blog = new Blog({
@@ -54,7 +55,7 @@ blogsRouter.put('/:id', async (request, response) => {
   const blog = await Blog.findByIdAndUpdate(
     request.params.id,
     request.body,
-    { new: true, runValidators: true, conext: 'query' }
+    { new: true, runValidators: true, context: 'query' }
   )
   response.json(blog)
 })

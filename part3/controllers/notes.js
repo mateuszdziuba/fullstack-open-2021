@@ -23,7 +23,7 @@ notesRouter.put('/:id', async (request, response) => {
   const note = await Note.findByIdAndUpdate(
     request.params.id,
     { content, important },
-    { new: true, runValidators: true, conext: 'query' }
+    { new: true, runValidators: true, context: 'query' }
   )
   response.json(note)
 })

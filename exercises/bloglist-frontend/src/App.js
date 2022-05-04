@@ -20,7 +20,7 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [newBlog, setNewBlog] = useState(emptyBlog)
   const [errorMessage, setErrorMessage] = useState({ message: null, error: false })
-  
+
   const blogFormRef = useRef()
 
   const handleLogin = async event => {
@@ -38,7 +38,6 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log(exception)
       setErrorMessage({ ...errorMessage, message: exception.response.data.error, error: true })
     }
   }
@@ -52,12 +51,16 @@ const App = () => {
   }
 
   const handleCreate = async event => {
-    event.preventDefault()
-    blogFormRef.current.toggleVisibility()
-    const blog = await blogService.create(newBlog)
-    setBlogs(blogs.concat(blog))
-    setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title} by ${newBlog.author} added`, error: false })
-    setNewBlog(emptyBlog)
+    try {
+      event.preventDefault()
+      blogFormRef.current.toggleVisibility()
+      const blog = await blogService.create(newBlog)
+      setBlogs(blogs.concat(blog))
+      setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title} by ${newBlog.author} added`, error: false })
+      setNewBlog(emptyBlog)
+    } catch (exception) {
+      setErrorMessage({ ...errorMessage, message: exception.response.data.error, error: true })
+    }
   }
 
   const handleLogout = () => {
@@ -80,14 +83,29 @@ const App = () => {
     }
   }, [])
 
-      
+  const addLike = async id => {
+    const blog = blogs.find(b => b.id === id)
+    const likedBlog = { ...blog, likes: blog.likes + 1, user: blog.user.id }
+    const updatedBlog = await blogService.update(id, likedBlog)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
+
+  }
+
+  const handleRemove = async id => {
+    const blogToRemove = blogs.find(blog => blog.id === id)
+    if (window.confirm(`Remove blog ${blogToRemove.title} by ${blogToRemove.author}`)) {
+      await blogService.remove(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+    }
+  }
+
   return (
     <div>
       <h2>blogs</h2>
       <Notification errorMessage={errorMessage} />
       {user === null ?
         <Togglable buttonLabel='log in'>
-          <LoginForm 
+          <LoginForm
             username={username}
             password={password}
             handleUsernameChange={({ target }) => setUsername(target.value)}
@@ -97,26 +115,26 @@ const App = () => {
         </Togglable>
         :
         <>
-        <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
-        <Togglable buttonLabel='new blog' ref={blogFormRef}>
-          <BlogForm 
-            title={newBlog.title}
-            author={newBlog.author}
-            url={newBlog.url}
-            handleBlogChange={handleBlogChange}
-            handleSubmit={handleCreate}
-          />
-        </Togglable>
+          <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
+          <Togglable buttonLabel='new blog' ref={blogFormRef}>
+            <BlogForm
+              title={newBlog.title}
+              author={newBlog.author}
+              url={newBlog.url}
+              handleBlogChange={handleBlogChange}
+              handleSubmit={handleCreate}
+            />
+          </Togglable>
         </>
       }
-            {
-          blogs.map(blog =>
-            <Blog key={blog.id} blog={blog} />
-          )
-        }
+      {
+        blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+          <Blog key={blog.id} blog={blog} addLike={addLike} handleRemove={handleRemove} user={user} />
+        )
+      }
     </div>
   )
 
-    }
+}
 
 export default App
