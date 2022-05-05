@@ -10,7 +10,7 @@ const emptyBlog = {
 
 const BlogForm = ({ handleSubmit, user }) => {
 
-
+  console.log(user)
   const [newBlog, setNewBlog] = useState(emptyBlog)
 
   const handleBlogChange = event => {
