@@ -32,12 +32,23 @@ describe('Note app', function () {
     cy.contains('Mateusz Dziuba logged-in')
   })
 
+  it('login fails with wrong password', function() {
+    cy.contains('log in').click()
+    cy.get('#username').type('mati')
+    cy.get('#password').type('wrong')
+    cy.get('#login-button').click()
+
+    cy.get('.error').contains('Wrong credentials')
+    cy.get('.error').should('contain', 'Wrong credentials')
+      .and('have.css', 'color', 'rgb(255, 0, 0)')
+      .and('have.css', 'border-style', 'solid')
+
+    cy.get('html').should('not.contain', 'Mateusz Dziuba logged in')
+  })
+
   describe('when logged in', function() {
     beforeEach(function() {
-      cy.contains('log in').click()
-      cy.get('#username').type('mati')
-      cy.get('#password').type('lol123')
-      cy.get('#login-button').click()
+      cy.login({ username: 'mati', password: 'lol123' })
     })
 
     it('a new note can be created', function() {
@@ -48,18 +59,38 @@ describe('Note app', function () {
     })
     describe('and a note exists', function () {
       beforeEach(function () {
-        cy.contains('new note').click()
-        cy.get('input').type('another note cypress')
-        cy.contains('save').click()
+        cy.createNote({
+          content: 'another note cypress',
+          important: false,
+        })
       })
 
       it('it can be made important', function () {
         cy.contains('another note cypress')
-          .contains('make important')
+          .parent()
+          .find('button')
           .click()
 
         cy.contains('another note cypress')
-          .contains('make not important')
+          .parent()
+          .find('button')
+          .should('contain', 'make not important')
+
+      })
+    })
+    describe('and several notes exist', function () {
+      beforeEach(function () {
+        cy.createNote({ content: 'first note', important: false })
+        cy.createNote({ content: 'second note', important: false })
+        cy.createNote({ content: 'third note', important: false })
+      })
+      it('one of those can be made important', function () {
+        cy.contains('second note')
+          .parent()
+          .find('button')
+          .as('theButton')
+        cy.get('@theButton').click()
+        cy.get('@theButton').should('contain', 'make not important')
       })
     })
   })
