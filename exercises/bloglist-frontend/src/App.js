@@ -7,18 +7,11 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 
-const emptyBlog = {
-  title: '',
-  author: '',
-  url: ''
-}
-
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [newBlog, setNewBlog] = useState(emptyBlog)
   const [errorMessage, setErrorMessage] = useState({ message: null, error: false })
 
   const blogFormRef = useRef()
@@ -42,24 +35,15 @@ const App = () => {
     }
   }
 
-  const handleBlogChange = event => {
-    const { name, value } = event.target
-    setNewBlog({
-      ...newBlog,
-      [name]: value,
-      user: user.id
-    })
-  }
 
-  const handleCreate = async event => {
+
+  const handleCreate = async newBlog => {
     try {
-      event.preventDefault()
       blogFormRef.current.toggleVisibility()
       const blog = await blogService.create(newBlog)
 
       setBlogs(blogs.concat(blog))
       setErrorMessage({ ...errorMessage, message: `a new blog ${newBlog.title} by ${newBlog.author} added`, error: false })
-      setNewBlog(emptyBlog)
     } catch (exception) {
       setErrorMessage({ ...errorMessage, message: exception.response.data.error, error: true })
     }
@@ -121,11 +105,7 @@ const App = () => {
           <p>{user.name} logged in<button onClick={handleLogout}>logout</button></p>
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
             <BlogForm
-              title={newBlog.title}
-              author={newBlog.author}
-              url={newBlog.url}
-              handleBlogChange={handleBlogChange}
-              handleSubmit={handleCreate}
+              handleSubmit={handleCreate} user={user}
             />
           </Togglable>
         </>
