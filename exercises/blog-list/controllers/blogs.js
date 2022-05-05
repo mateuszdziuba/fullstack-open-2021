@@ -56,7 +56,7 @@ blogsRouter.put('/:id', async (request, response) => {
     request.params.id,
     request.body,
     { new: true, runValidators: true, context: 'query' }
-  )
+  ).populate('user')
   response.json(blog)
 })
 
