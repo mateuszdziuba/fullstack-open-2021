@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import App from './App'
 import noteReducer from './reducers/noteReducer'
 
-const store = createStore(noteReducer)
+const store = configureStore({ reducer: noteReducer })
 
 store.dispatch({
   type: 'NEW_NOTE',
