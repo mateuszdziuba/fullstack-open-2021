@@ -14,7 +14,7 @@ import noteService from '../services/notes'
 //     id: 2,
 //   },
 // ]
-const generateId = () => Number((Math.random() * 1000000).toFixed(0))
+// const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 
 // const noteReducer = (state = initialState, action) => {
 //   switch (action.type) {
