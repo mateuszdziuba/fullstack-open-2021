@@ -1,4 +1,3 @@
-import { resetWarningCache } from 'prop-types'
 import { useState } from 'react'
 
 const useField = (name) => {
@@ -8,12 +7,11 @@ const useField = (name) => {
 
   const reset = () => setValue('')
 
-  return {
+  return { input: {
     name,
     value,
-    onChange,
-    reset
-  }
+    onChange
+  }, reset }
 }
 
 export { useField }
