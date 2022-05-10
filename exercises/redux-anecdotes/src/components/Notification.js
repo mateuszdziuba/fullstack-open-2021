@@ -2,14 +2,14 @@ import { useSelector } from 'react-redux'
 
 const Notification = () => {
 
-  const notification = useSelector(state => state.notification)
+  const notification = useSelector(state => state.notification.text)
 
   const style = {
     border: 'solid',
     padding: 10,
     borderWidth: 1
   }
-  
+
   return (
     <>
       {notification === '' ?
@@ -19,8 +19,8 @@ const Notification = () => {
         </div>
       }
     </>
-    )
-    
+  )
+
 }
 
 export default Notification
