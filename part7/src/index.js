@@ -1,11 +1,43 @@
 import ReactDOM from 'react-dom/client'
 import { useState } from 'react'
+<<<<<<< HEAD
 import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
+=======
+import styled from 'styled-components'
+>>>>>>> part7-c3
 
 import {
   BrowserRouter as Router,
   Routes, Route, Link, Navigate, useParams, useNavigate, useMatch
 } from 'react-router-dom'
+
+const Button = styled.button`
+  background: Bisque;
+  font-size: 1rem;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid Chocolate;
+  border-radius: 3px;
+`
+
+const Input = styled.input`
+  margin: 0.25em;
+`
+
+const Page = styled.div`
+  padding: 1em;
+  background: papayawhip;
+`
+const Navigation = styled.div`
+  background: BurlyWood;
+  padding: 1em;
+`
+
+const Footer = styled.div`
+  background: Chocolate;
+  padding: 1em;
+  margin-top: 1em;
+`
 
 const Home = () => (
   <div>
@@ -67,6 +99,7 @@ const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
+<<<<<<< HEAD
       <Form onSubmit={onSubmit}>
         <Form.Group>
         <Form.Label>username:</Form.Label>
@@ -82,6 +115,17 @@ const Login = (props) => {
         <Button variant="primary" type="submit">login</Button>
         </Form.Group>
       </Form>
+=======
+      <form onSubmit={onSubmit}>
+        <div>
+          username: <Input />
+        </div>
+        <div>
+          password: <Input type='password' />
+        </div>
+        <Button type="submit">login</Button>
+      </form>
+>>>>>>> part7-c3
     </div>
   )
 }
@@ -131,6 +175,7 @@ const App = () => {
   }
 
   return (
+<<<<<<< HEAD
     <div className="container">
       {(message &&
         <Alert variant="success">
@@ -159,6 +204,18 @@ const App = () => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
+=======
+    <Page>
+      <Navigation>
+        <Link style={padding} to="/">home</Link>
+        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/users">users</Link>
+        {user
+          ? <em>{user} logged in</em>
+          : <Link style={padding} to="/login">login</Link>
+        }
+      </Navigation>
+>>>>>>> part7-c3
 
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
@@ -168,10 +225,10 @@ const App = () => {
         <Route path="/" element={<Home />} />
       </Routes>
 
-      <div>
+      <Footer>
         <i>Note app, Department of Computer Science 2022</i>
-      </div>
-    </div>
+      </Footer>
+    </Page>
   )
 }
 
