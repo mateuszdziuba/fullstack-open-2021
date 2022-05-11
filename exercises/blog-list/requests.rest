@@ -5,13 +5,13 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb
 ###
 PUT http://localhost:3003/api/blogs/626977f46807770f97dc00e2
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTkzNzQ1MDE0YzM0NzAyNjdhNDAwZSIsImlhdCI6MTY1MTY2ODk5Nn0.AkmIIPQvcIZozIJO9wqWYUWVv79XGA9QfKZ7ifL-rsU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYyNTkzNzQ1MDE0YzM0NzAyNjdhNDAwZSIsImlhdCI6MTY1MjI4NjkyOX0.XxVx7Fp9UFUrjbyTmjUtaEhjIObe9nALfj3cXkF8W_8
 
 { 
-  "author": "Dan",
+  "author": "Dan Abramov",
   "likes": 71234,
-  "title": "React ABC",
-  "url": "react.abc"
+  "title": "Overreacted",
+  "url": "overreacted.io"
 }
 ###
 POST http://localhost:3003/api/blogs/

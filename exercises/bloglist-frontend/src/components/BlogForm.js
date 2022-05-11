@@ -1,5 +1,7 @@
-import PropTypes from 'prop-types'
+// import PropTypes from 'prop-types'
 import { useState } from 'react'
+import { createBlog } from '../reducers/blogReducer'
+import { useDispatch } from 'react-redux'
 
 const emptyBlog = {
   title: '',
@@ -8,12 +10,11 @@ const emptyBlog = {
   user: {}
 }
 
-const BlogForm = ({ handleSubmit, user }) => {
-
-  console.log(user)
+const BlogForm = ({ user }) => {
   const [newBlog, setNewBlog] = useState(emptyBlog)
+  const dispatch = useDispatch()
 
-  const handleBlogChange = event => {
+  const handleBlogChange = (event) => {
     const { name, value } = event.target
     setNewBlog({
       ...newBlog,
@@ -22,10 +23,9 @@ const BlogForm = ({ handleSubmit, user }) => {
     })
   }
 
-  const submitBlog = event => {
+  const submitBlog = (event) => {
     event.preventDefault()
-    handleSubmit(newBlog)
-
+    dispatch(createBlog(newBlog))
     setNewBlog(emptyBlog)
   }
 
@@ -33,23 +33,41 @@ const BlogForm = ({ handleSubmit, user }) => {
     <form onSubmit={submitBlog}>
       <div>
         title:
-        <input type="text" name="title" value={newBlog.title} onChange={handleBlogChange} placeholder='title' />
+        <input
+          type="text"
+          name="title"
+          value={newBlog.title}
+          onChange={handleBlogChange}
+          placeholder="title"
+        />
       </div>
       <div>
         author:
-        <input type="text" name="author" value={newBlog.author} onChange={handleBlogChange} placeholder='author' />
+        <input
+          type="text"
+          name="author"
+          value={newBlog.author}
+          onChange={handleBlogChange}
+          placeholder="author"
+        />
       </div>
       <div>
         url:
-        <input type="text" name="url" value={newBlog.url} onChange={handleBlogChange} placeholder='url' />
+        <input
+          type="text"
+          name="url"
+          value={newBlog.url}
+          onChange={handleBlogChange}
+          placeholder="url"
+        />
       </div>
       <button type="submit">create</button>
     </form>
   )
 }
 
-BlogForm.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-}
+// BlogForm.propTypes = {
+//   handleSubmit: PropTypes.func.isRequired
+// }
 
 export default BlogForm

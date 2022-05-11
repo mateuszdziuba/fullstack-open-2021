@@ -1,5 +1,5 @@
-describe('Blog app', function(){
-  beforeEach(function() {
+describe('Blog app', function () {
+  beforeEach(function () {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     const user = {
       name: 'Mateusz Dziuba',
@@ -10,19 +10,19 @@ describe('Blog app', function(){
     cy.visit('http://localhost:3000')
   })
 
-  it('Login form is shown', function() {
+  it('Login form is shown', function () {
     cy.contains('username')
     cy.contains('password')
     cy.get('#login-button').contains('login')
   })
 
-  describe('Login', function() {
-    it('succeeds with correct credentials', function() {
+  describe('Login', function () {
+    it('succeeds with correct credentials', function () {
       cy.login({ username: 'mati', password: 'lol123' })
       cy.contains('Mateusz Dziuba logged in')
     })
 
-    it('fails with wrong credentials', function() {
+    it('fails with wrong credentials', function () {
       cy.get('#username').type('mati')
       cy.get('#password').type('wrong')
       cy.get('#login-button').click()
@@ -30,28 +30,28 @@ describe('Blog app', function(){
     })
   })
 
-  describe('When logged in', function() {
-    beforeEach(function() {
+  describe('When logged in', function () {
+    beforeEach(function () {
       cy.login({ username: 'mati', password: 'lol123' })
     })
 
-    it('A blog can be created', function() {
+    it('A blog can be created', function () {
       cy.createBlog({ title: 'Szosty gracz', url: 'szostygracz.pl', author: 'Maciej' })
       cy.contains('Szosty gracz Maciej')
     })
 
-    describe('blog operations', function() {
-      beforeEach(function() {
+    describe('blog operations', function () {
+      beforeEach(function () {
         cy.createBlog({ title: 'Szosty gracz', url: 'szostygracz.pl', author: 'Maciej' })
       })
 
-      it('A blog can be liked', function() {
+      it('A blog can be liked', function () {
         cy.contains('Szosty gracz Maciej')
         cy.contains('view').click()
         cy.contains('likes 0').contains('like').click()
         cy.contains('likes 1')
       })
-      it('A blog can be removed by creator', function() {
+      it('A blog can be removed by creator', function () {
         cy.contains('Szosty gracz Maciej')
         cy.contains('view').click()
         cy.contains('Mateusz Dziuba')
@@ -59,7 +59,7 @@ describe('Blog app', function(){
         cy.get('html').should('not.contain', 'Szosty gracz Maciej')
       })
 
-      it('A blog cannot be removed by other user', function() {
+      it('A blog cannot be removed by other user', function () {
         cy.contains('Szosty gracz Maciej')
         cy.contains('view').click()
         cy.contains('Mateusz Dziuba')
@@ -76,7 +76,7 @@ describe('Blog app', function(){
         cy.should('not.contain', 'remove')
       })
     })
-    it('blogs should be ordered according to number of likes', function() {
+    it('blogs should be ordered according to number of likes', function () {
       cy.createBlog({ title: 'Most likes', url: 'most.com', author: 'Mati' })
       cy.createBlog({ title: '2nd most likes', url: 'most.com', author: 'Mati' })
       cy.createBlog({ title: '3rd most likes', url: 'most.com', author: 'Mati' })

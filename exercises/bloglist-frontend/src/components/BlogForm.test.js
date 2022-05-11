@@ -15,13 +15,10 @@ test('<BlogForm /> updates parent state and calls onSubmit', async () => {
   const authorInput = screen.getByPlaceholderText('author')
   const sendButton = screen.getByText('create')
 
-
-
   await user.type(titleInput, 'Czary i magia')
   await user.type(urlInput, 'czaryimag.ia')
   await user.type(authorInput, 'Waciej')
   await user.click(sendButton)
-
 
   expect(createBlog.mock.calls).toHaveLength(1)
   expect(createBlog.mock.calls[0][0].title).toBe('Czary i magia')

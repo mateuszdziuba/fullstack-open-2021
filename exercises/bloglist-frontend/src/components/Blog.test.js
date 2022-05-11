@@ -16,7 +16,6 @@ const blog = {
 }
 
 test('renders blog title and author', () => {
-
   render(<Blog blog={blog} />)
 
   const title = screen.getByText('Zawsze po pierwsze', { exact: false })
@@ -30,11 +29,7 @@ test('renders blog title and author', () => {
 })
 
 test('clicking the button shows likes and url', async () => {
-
-  render(
-    <Blog blog={blog} />
-  )
-
+  render(<Blog blog={blog} />)
 
   const user = userEvent.setup()
   const button = screen.getByText('view')
@@ -49,10 +44,7 @@ test('clicking the button shows likes and url', async () => {
 test('clicking like button twice works', async () => {
   const mockHandler = jest.fn()
 
-  render(
-    <Blog blog={blog} addLike={mockHandler} />
-  )
-
+  render(<Blog blog={blog} addLike={mockHandler} />)
 
   const user = userEvent.setup()
   const button = screen.getByText('view')
@@ -63,5 +55,4 @@ test('clicking like button twice works', async () => {
   await user.click(likeButton)
 
   expect(mockHandler.mock.calls).toHaveLength(2)
-
 })

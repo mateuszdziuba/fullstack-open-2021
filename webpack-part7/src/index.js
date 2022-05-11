@@ -5,4 +5,10 @@ import 'core-js/stable/index.js'
 import 'regenerator-runtime/runtime.js'
 import './index.css'
 
+import PromisePolyfill from 'promise-polyfill'
+
+if (!window.Promise) {
+  window.Prmise = PromisePolyfill
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(<App />)

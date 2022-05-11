@@ -3,13 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "axios": "^0.21.1",
+    "eslint-config-prettier": "^8.5.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^8.0.1",
     "react-scripts": "4.0.1",
+    "redux-thunk": "^2.4.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -18,7 +22,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint": "eslint .",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +48,8 @@
     "@testing-library/user-event": "^14.1.1",
     "cypress": "^9.6.0",
     "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-jest": "^24.7.0"
+    "eslint-plugin-jest": "^24.7.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
   }
 }
