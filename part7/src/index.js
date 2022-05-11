@@ -1,10 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { useState } from 'react'
-<<<<<<< HEAD
-import { Table, Form, Button, Alert, Navbar, Nav } from 'react-bootstrap'
-=======
 import styled from 'styled-components'
->>>>>>> part7-c3
 
 import {
   BrowserRouter as Router,
@@ -61,17 +57,13 @@ const Note = ({ note }) => {
 const Notes = ({ notes }) => (
   <div>
     <h2>Notes</h2>
-      <Table striped>
-        <tbody>
+      <ul>
           {notes.map(note =>
-            <tr key={note.id}>
-              <td>
+            <li key={note.id}>
               <Link to={`/notes/${note.id}`}>{note.content}</Link>
-              </td>
-            </tr>
+            </li>
           )}
-        </tbody>
-      </Table>
+        </ul>
   </div>
 )
 
@@ -99,23 +91,6 @@ const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
-<<<<<<< HEAD
-      <Form onSubmit={onSubmit}>
-        <Form.Group>
-        <Form.Label>username:</Form.Label>
-        <Form.Control
-          type="text"
-          name="username"
-        />
-        <Form.Label>password:</Form.Label>
-        <Form.Control
-          type="text"
-          name="password"
-        />
-        <Button variant="primary" type="submit">login</Button>
-        </Form.Group>
-      </Form>
-=======
       <form onSubmit={onSubmit}>
         <div>
           username: <Input />
@@ -125,7 +100,6 @@ const Login = (props) => {
         </div>
         <Button type="submit">login</Button>
       </form>
->>>>>>> part7-c3
     </div>
   )
 }
@@ -175,36 +149,6 @@ const App = () => {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="container">
-      {(message &&
-        <Alert variant="success">
-          {message}
-        </Alert>  
-      )}
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/">home</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/notes">notes</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/users">users</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              {user
-                ? <em>{user} logged in</em>
-                : <Link style={padding} to="/login">login</Link>
-              }
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-=======
     <Page>
       <Navigation>
         <Link style={padding} to="/">home</Link>
@@ -215,7 +159,6 @@ const App = () => {
           : <Link style={padding} to="/login">login</Link>
         }
       </Navigation>
->>>>>>> part7-c3
 
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
