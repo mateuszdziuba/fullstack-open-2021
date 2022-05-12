@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { createBlog } from '../reducers/blogReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const emptyBlog = {
   title: '',
@@ -10,9 +10,10 @@ const emptyBlog = {
   user: {}
 }
 
-const BlogForm = ({ user }) => {
+const BlogForm = () => {
   const [newBlog, setNewBlog] = useState(emptyBlog)
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.login.user)
 
   const handleBlogChange = (event) => {
     const { name, value } = event.target

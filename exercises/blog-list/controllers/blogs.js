@@ -4,8 +4,7 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
-  const blogs = await Blog
-    .find({}).populate('user', { username: 1, name: 1 })
+  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs)
 })
 
@@ -23,8 +22,9 @@ blogsRouter.post('/', async (request, response) => {
   const user = await User.findById(request.user.id)
 
   if (!body.title && !body.url) {
-
-    return response.status(400).json({ error: 'blog must contain title or url' })
+    return response
+      .status(400)
+      .json({ error: 'blog must contain title or url' })
   }
 
   const blog = new Blog({
@@ -32,7 +32,7 @@ blogsRouter.post('/', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
-    user: user._id
+    user: user._id,
   })
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
@@ -52,11 +52,11 @@ blogsRouter.delete('/:id', async (request, response) => {
 })
 
 blogsRouter.put('/:id', async (request, response) => {
-  const blog = await Blog.findByIdAndUpdate(
-    request.params.id,
-    request.body,
-    { new: true, runValidators: true, context: 'query' }
-  ).populate('user')
+  const blog = await Blog.findByIdAndUpdate(request.params.id, request.body, {
+    new: true,
+    runValidators: true,
+    context: 'query',
+  }).populate('user')
   response.json(blog)
 })
 

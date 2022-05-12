@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = ''
 
@@ -8,16 +8,15 @@ const notificationSlice = createSlice({
   reducers: {
     addNotificaton(state, action) {
       return action.payload
-    }
-  }
-
+    },
+  },
 })
 
-export const { addNotificaton, removeNotification } = notificationSlice.actions
+export const { addNotificaton } = notificationSlice.actions
 
 let timeout
 export const setNotification = (text, time) => {
-  return dispatch => {
+  return (dispatch) => {
     clearTimeout(timeout)
     dispatch(addNotificaton(text))
     timeout = setTimeout(() => {

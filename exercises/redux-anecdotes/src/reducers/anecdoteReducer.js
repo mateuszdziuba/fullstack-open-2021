@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import anecdoteService from "../services/anecdotes";
+import { createSlice } from '@reduxjs/toolkit'
+import anecdoteService from '../services/anecdotes'
 
 // const anecdotesAtStart = [
 //   'If it hurts, do it more often',
@@ -63,48 +63,48 @@ import anecdoteService from "../services/anecdotes";
 // }
 
 const anecdoteSlice = createSlice({
-  name: "anecdotes",
+  name: 'anecdotes',
   initialState: [],
   reducers: {
     modifyAnecdote(state, action) {
-      const object = action.payload;
+      const object = action.payload
 
       return state
         .map((anecdote) => (anecdote.id !== object.id ? anecdote : object))
-        .sort((a, b) => b.votes - a.votes);
+        .sort((a, b) => b.votes - a.votes)
     },
     appendAnecdote(state, action) {
-      state.push(action.payload);
+      state.push(action.payload)
     },
     setAnecdotes(state, action) {
-      return action.payload.sort((a, b) => b.votes - a.votes);
+      return action.payload.sort((a, b) => b.votes - a.votes)
     },
   },
-});
+})
 
 export const { modifyAnecdote, setAnecdotes, appendAnecdote } =
-  anecdoteSlice.actions;
+  anecdoteSlice.actions
 
 export const initializeAnecdotes = () => {
   return async (dispatch) => {
-    const anecdotes = await anecdoteService.getAll();
-    dispatch(setAnecdotes(anecdotes));
-  };
-};
+    const anecdotes = await anecdoteService.getAll()
+    dispatch(setAnecdotes(anecdotes))
+  }
+}
 
 export const createAnecdote = (content) => {
   return async (dispatch) => {
-    const newAnecdote = await anecdoteService.createNew(content);
-    dispatch(appendAnecdote(newAnecdote));
-  };
-};
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch(appendAnecdote(newAnecdote))
+  }
+}
 
 export const vote = (id, content, votes) => {
   return async (dispatch) => {
-    const newObject = { content, votes: votes + 1 };
-    const anecdoteVoted = await anecdoteService.addVote(id, newObject);
-    dispatch(modifyAnecdote(anecdoteVoted));
-  };
-};
+    const newObject = { content, votes: votes + 1 }
+    const anecdoteVoted = await anecdoteService.addVote(id, newObject)
+    dispatch(modifyAnecdote(anecdoteVoted))
+  }
+}
 
-export default anecdoteSlice.reducer;
+export default anecdoteSlice.reducer
