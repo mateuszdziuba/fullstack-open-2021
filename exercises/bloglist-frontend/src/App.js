@@ -5,6 +5,7 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import UsersList from './components/UsersList'
 
 import { setUser } from './reducers/loginReducer'
 
@@ -54,7 +55,7 @@ const App = () => {
       dispatch(setUser(user))
       blogService.setToken(user.token)
     }
-  }, [])
+  }, [dispatch])
 
   const user = useSelector((state) => state.login.user)
   // const addLike = async (id) => {
@@ -107,6 +108,7 @@ const App = () => {
             // user={user}
           />
         ))}
+      <UsersList />
     </div>
   )
 }

@@ -25,8 +25,6 @@ const Blog = ({ blog }) => {
     }
   }
 
-  console.log(blog)
-
   return (
     <div style={blogStyle} className="blog">
       {blog.title} {blog.author}{' '}
