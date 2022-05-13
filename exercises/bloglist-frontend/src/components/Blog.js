@@ -1,23 +1,9 @@
-import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addLike, removeBlog } from '../reducers/blogReducer'
 
 const Blog = ({ blog }) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
-  const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
   const user = useSelector((state) => state.login.user)
-
-  const toggleVisibility = () => {
-    setVisible(!visible)
-  }
 
   const handleRemove = (blog) => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
@@ -25,24 +11,22 @@ const Blog = ({ blog }) => {
     }
   }
 
+  if (!blog) return null
+
   return (
-    <div style={blogStyle} className="blog">
-      {blog.title} {blog.author}{' '}
-      <button onClick={toggleVisibility}>{visible ? 'hide' : 'view'}</button>
-      {visible && (
-        <>
-          <br />
-          {blog.url}
-          <br />
-          likes {blog.likes}
-          <button onClick={() => dispatch(addLike(blog))}>like</button>
-          <br />
-          {blog.user.name}
-          <br />
-          {user && user.username === blog.user.username && (
-            <button onClick={() => handleRemove(blog)}>remove</button>
-          )}
-        </>
+    <div className="blog">
+      <h2>
+        {blog.title} {blog.author}
+      </h2>
+      <a href={`"${blog.url}"`}>{blog.url}</a>
+      <br />
+      likes {blog.likes}
+      <button onClick={() => dispatch(addLike(blog))}>like</button>
+      <br />
+      {blog.user.name}
+      <br />
+      {user && user.username === blog.user.username && (
+        <button onClick={() => handleRemove(blog)}>remove</button>
       )}
     </div>
   )

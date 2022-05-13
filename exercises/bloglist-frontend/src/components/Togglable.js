@@ -17,8 +17,12 @@ const Togglable = forwardRef((props, ref) => {
     }
   })
 
+  const inlineBlock = {
+    display: 'inline-block'
+  }
+
   return (
-    <div>
+    <div style={inlineBlock}>
       <div style={hideWhenVisible}>
         <button onClick={toggleVisibility}>{props.buttonLabel}</button>
       </div>

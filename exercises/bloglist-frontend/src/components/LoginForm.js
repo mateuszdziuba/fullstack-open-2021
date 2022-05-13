@@ -8,11 +8,14 @@ const LoginForm = () => {
     event.preventDefault()
     dispatch(login(username, password))
   }
+  const inlineBlock = {
+    display: 'inline-block'
+  }
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
+    <div style={inlineBlock}>
+      <h2 style={inlineBlock}>Login</h2>
+      <form style={inlineBlock} onSubmit={handleLogin}>
+        <div style={inlineBlock}>
           username
           <input
             id="username"
@@ -22,7 +25,7 @@ const LoginForm = () => {
             onChange={(e) => dispatch(setUsername(e.target.value))}
           />
         </div>
-        <div>
+        <div style={inlineBlock}>
           password
           <input
             id="password"
