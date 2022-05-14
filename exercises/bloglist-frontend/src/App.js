@@ -62,7 +62,7 @@ const App = () => {
     <div>
       <div style={inlineBlock}>
         <Link style={padding} to="/blogs">
-          notes
+          blogs
         </Link>
         <Link style={padding} to="/users">
           users
@@ -84,6 +84,7 @@ const App = () => {
         <Route path="/blogs/:id" element={<Blog blog={blog} />} />
         <Route path="/users/:id" element={<User user={selectedUser} />} />
         <Route path="/blogs" element={<BlogsList user={user} />} />
+        <Route path="/" element={<BlogsList user={user} />} />
         <Route path="/users" element={<UsersList />} />
       </Routes>
     </div>
