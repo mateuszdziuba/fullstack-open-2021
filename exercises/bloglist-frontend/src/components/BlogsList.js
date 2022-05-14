@@ -3,6 +3,7 @@ import Togglable from './Togglable'
 import { useRef } from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { ListGroup } from 'react-bootstrap'
 
 const BlogsList = ({ user }) => {
   const blogs = useSelector((state) => state.blogs)
@@ -19,17 +20,17 @@ const BlogsList = ({ user }) => {
             </Togglable>
           </>
         )}
-        <ul>
+        <ListGroup as="ul">
           {[...blogs]
             .sort((a, b) => b.likes - a.likes)
             .map((blog) => (
-              <li key={blog.id}>
+              <ListGroup.Item as="li" key={blog.id}>
                 <Link to={`/blogs/${blog.id}`}>
                   {blog.title} {blog.author}
                 </Link>
-              </li>
+              </ListGroup.Item>
             ))}
-        </ul>
+        </ListGroup>
       </div>
     </>
   )
