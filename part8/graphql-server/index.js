@@ -7,7 +7,7 @@ const {
 const mongoose = require('mongoose')
 const Person = require('./models/person')
 const User = require('./models/user')
-
+const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -76,11 +76,11 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     personCount: async () => Person.collection.countDocuments(),
-    allPersons: (root, args) => {
+    allPersons: async (root, args) => {
       if (!args.phone) {
-        return Person.find({})
+        return await Person.find({})
       }
-      return Person.find({ phone: { $exists: args.phone === 'YES' } })
+      return await Person.find({ phone: { $exists: args.phone === 'YES' } })
     },
     findPerson: async (root, args) => Person.findOne({ name: args.name }),
     me: (root, args, context) => {
@@ -96,7 +96,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    addPerson: async (root, args) => {
+    addPerson: async (root, args, context) => {
       const person = new Person({ ...args })
       const currentUser = context.currentUser
 
