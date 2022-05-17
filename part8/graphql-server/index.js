@@ -4,12 +4,10 @@ const {
   gql,
   AuthenticationError,
 } = require('apollo-server')
-const { v1: uuid } = require('uuid')
 const mongoose = require('mongoose')
 const Person = require('./models/person')
-const {
-  default: User,
-} = require('../../exercises/bloglist-frontend/src/components/User')
+const User = require('./models/user')
+
 require('dotenv').config()
 
 const MONGODB_URI = process.env.MONGODB_URI
