@@ -188,7 +188,7 @@ const resolvers = {
       return book
     },
     editAuthor: async (root, args) => {
-      const author = Author.findOne({ name: args.name })
+      const author = await Author.findOne({ name: args.name })
       if (!author) {
         return null
       }
