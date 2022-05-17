@@ -152,27 +152,29 @@ const typeDefs = gql`
 
 const resolvers = {
   Author: {
-    bookCount: async (root, args) => {
-      return Book.find({ author: root }).count()
+    bookCount: async (root) => {
+      return await Book.find({ author: root }).count()
     }
   },
   Query: {
     bookCount: async (root, args) => {
       if (!args.author) return Book.collection.countDocuments()
-      // return books.reduce((acc, obj) => acc + (obj.author === args.author ? 1 : 0), 0)
+      const author = await Author.findOne({ name: args.author })
+      return await Book.find({ author }).count()
     },
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      if (!args.author && !args.genre) return Book.find({})
+      const author = await Author.findOne({ name: args.author })
+      if (!args.author && !args.genre) return await Book.find({})
       if (!args.genre) {
-        return Book.find({ author: args.author })
+        return await Book.find({ author })
       }
       if (!args.author) {
-        return Book.find({ genres: args.genre })
+        return await Book.find({ genres: args.genre })
       }
-      return Book.find({ author: args.author, genres: args.genre })
+      return await Book.find({ author, genres: args.genre })
     },
-    allAuthors: async () => { return Author.find({}) }
+    allAuthors: async () => { return await Author.find({}) }
   },
   Mutation: {
     addBook: async (root, args) => {
@@ -181,7 +183,7 @@ const resolvers = {
         author = new Author({ name: args.author, born: null })
         await author.save()
       } else {
-        author = Author.findOne({ name: args.author })
+        author = await Author.findOne({ name: args.author })
       }
       let book = new Book({ ...args, author })
       await book.save()
