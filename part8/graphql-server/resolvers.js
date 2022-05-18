@@ -12,9 +12,11 @@ const resolvers = {
     personCount: async () => Person.collection.countDocuments(),
     allPersons: async (root, args) => {
       if (!args.phone) {
-        return await Person.find({})
+        return await Person.find({}).populate('friendOf')
       }
-      return await Person.find({ phone: { $exists: args.phone === 'YES' } })
+      return await Person.find({
+        phone: { $exists: args.phone === 'YES' },
+      }).populate('friendOf')
     },
     findPerson: async (root, args) => Person.findOne({ name: args.name }),
     me: (root, args, context) => {
@@ -28,6 +30,14 @@ const resolvers = {
         city: root.city,
       }
     },
+    // friendOf: (root) => {
+    //   const friends = await User.find({
+    //     friends: {
+    //       $in: [root._id]
+    //     }
+    //   })
+    //   return friends
+    // },
   },
   Mutation: {
     addPerson: async (root, args, context) => {
