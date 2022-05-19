@@ -1,4 +1,4 @@
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import { ME, BOOKS_BY_GENRE } from '../queries'
 
@@ -22,7 +22,7 @@ const Recommendations = ({ show, token }) => {
     }
   }
   waitForUser()
-  }, [token, loading, data])
+  }, [token, loading, data, getUser, getBooks])
 
   if (!show) {
     return null
