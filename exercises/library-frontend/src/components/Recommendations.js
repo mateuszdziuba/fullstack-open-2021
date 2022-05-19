@@ -5,17 +5,23 @@ import { ME, BOOKS_BY_GENRE } from '../queries'
 const Recommendations = ({ show, token }) => {
   const [genre, setGenre] = useState(null)
   const [getUser, { loading, data }] = useLazyQuery(ME)
+  
 
   const [getBooks, { loading: booksLoading, data: booksData }] = useLazyQuery(BOOKS_BY_GENRE)
 
   useEffect(() => {
-    if (token) {
-      getUser()
-      if (!loading && data) {
-        setGenre(data.me.favouriteGenre)
-        getBooks({ variables: { genre: data.me.favouriteGenre } })
-      }
+    const waitForUser = async () => {
+      if (token) {
+        console.log(token)
+        await getUser()
+        console.log(data)
+        if (!loading && data) {
+          setGenre(data.me.favouriteGenre)
+          await getBooks({ variables: { genre: data.me.favouriteGenre } })
+        }
     }
+  }
+  waitForUser()
   }, [token, loading, data])
 
   if (!show) {
