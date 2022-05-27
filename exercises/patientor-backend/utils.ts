@@ -157,11 +157,12 @@ const parseString = (stringLabel: string, string: unknown): string => {
 };
 
 const isRating = (param: number): param is HealthCheckRating => {
+  console.log(param);
   return Object.values(HealthCheckRating).includes(param);
 };
 
 const parseHealtchCheckRating = (rating: any): HealthCheckRating => {
-  if (!rating || isNaN(rating) || !isRating(rating)) {
+  if (rating === null || isNaN(rating) || !isRating(rating)) {
     throw new Error('Incorrect or missing rating');
   }
 
