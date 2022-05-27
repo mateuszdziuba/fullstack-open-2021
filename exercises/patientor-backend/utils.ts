@@ -1,4 +1,4 @@
-import { Gender, NewPatient } from './types';
+import { Gender, NewPatient, NewEntry, HealthCheckRating } from './types';
 
 type Fields = {
   name: unknown;
@@ -6,6 +6,20 @@ type Fields = {
   ssn: unknown;
   gender: unknown;
   occupation: unknown;
+};
+
+type EntryFields = {
+  description: unknown;
+  date: unknown;
+  specialist: unknown;
+  diagnosisCodes: unknown;
+  type: unknown;
+  healthCheckRating: unknown;
+  employerName: unknown;
+  dischargeDate: unknown;
+  dischargeCriteria: unknown;
+  sickLeaveStartDate: unknown;
+  sickLeaveEndDate: unknown;
 };
 
 const toNewPatient = ({
@@ -82,3 +96,91 @@ const parseoOcupation = (occupation: unknown): string => {
 };
 
 export default toNewPatient;
+
+export const toNewEntry = ({
+  description,
+  date,
+  specialist,
+  diagnosisCodes,
+  type,
+  healthCheckRating,
+  dischargeDate,
+  dischargeCriteria,
+  employerName,
+  sickLeaveStartDate,
+  sickLeaveEndDate
+}: EntryFields): NewEntry => {
+  const newEntry = {
+    description: parseString('description', description),
+    date: parseDate(date),
+    specialist: parseString('specialist', specialist),
+    diagnosisCodes: parseCodes(diagnosisCodes)
+  };
+
+  switch (parseString('type', type)) {
+    case 'HealthCheck':
+      return {
+        ...newEntry,
+        type: 'HealthCheck',
+        healthCheckRating: parseHealtchCheckRating(healthCheckRating)
+      };
+    case 'Hospital':
+      return {
+        ...newEntry,
+        type: 'Hospital',
+        discharge: {
+          date: parseDate(dischargeDate),
+          criteria: parseString('discharge criteria', dischargeCriteria)
+        }
+      };
+    case 'OccupationalHealthcare':
+      return {
+        ...newEntry,
+        type: 'OccupationalHealthcare',
+        employerName: parseString('employer', employerName),
+        sickLeave: {
+          startDate: parseDate(sickLeaveStartDate),
+          endDate: parseDate(sickLeaveEndDate)
+        }
+      };
+    default:
+      throw new Error('Incorrect entry type');
+  }
+};
+
+const parseString = (stringLabel: string, string: unknown): string => {
+  if (!string || !isString(string)) {
+    throw new Error(`Incorrect or missing ${stringLabel}`);
+  }
+
+  return string;
+};
+
+const isRating = (param: number): param is HealthCheckRating => {
+  return Object.values(HealthCheckRating).includes(param);
+};
+
+const parseHealtchCheckRating = (rating: any): HealthCheckRating => {
+  if (!rating || isNaN(rating) || !isRating(rating)) {
+    throw new Error('Incorrect or missing rating');
+  }
+
+  return rating;
+};
+
+const parseDate = (date: unknown): string => {
+  // if (!date || !isString(date) || !isDate(date)) {
+  if (!date || !isString(date)) {
+    throw new Error('Incorrect or missing date: ' + date);
+  }
+
+  return date;
+};
+
+const parseCodes = (codes: any): string[] => {
+  if (!codes) {
+    throw new Error('Incorrect or missing codes');
+  }
+
+  return codes;
+};

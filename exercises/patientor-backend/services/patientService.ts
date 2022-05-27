@@ -1,5 +1,5 @@
 import patients from '../data/patients';
-import { NewPatient, PublicPatient, Patient } from '../types';
+import { NewPatient, PublicPatient, Patient, Entry, NewEntry } from '../types';
 import { v1 as uuid } from 'uuid';
 
 const getAll = (): PublicPatient[] => {
@@ -13,6 +13,7 @@ const getAll = (): PublicPatient[] => {
 };
 
 const id: string = uuid();
+const entryId: string = uuid();
 
 const addPatient = (person: NewPatient): Patient => {
   const newPatient: Patient = {
@@ -28,8 +29,23 @@ const getPatient = (id: string): Patient | undefined => {
   return patient;
 };
 
+const addEntry = (id: string, entry: NewEntry): Entry => {
+  const patient: Patient | undefined = patients.find((p) => p.id === id);
+  const newEntry: Entry = {
+    id: entryId,
+    ...entry
+  };
+  if (!patient) {
+    throw new Error('Incorrect patient id');
+  }
+  patient.entries.push(newEntry);
+
+  return newEntry;
+};
+
 export default {
   getAll,
   addPatient,
-  getPatient
+  getPatient,
+  addEntry
 };
